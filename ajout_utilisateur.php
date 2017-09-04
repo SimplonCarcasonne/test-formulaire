@@ -21,20 +21,75 @@
     <![endif]-->
   </head>
   <body>
-    <p>Var_dump: <?php var_dump( $_GET);?></p>
-
     <div class="container">
-      <form method='get' action='ajout_utilisateur.php'>
+      <h1>Ajout d'un utilisateur</h1>
+      <?php
+        //Fonction de test de champ vide
+        function testEmptyField($field) {
+          if(empty($_POST[$field])) {
+            return "Le champ ".$field." est vide.<br>";
+          }
+        }
+
+        if(isset($_POST['valider'])) {
+          //Validation du formulaire
+          $erreur = "";
+          if( strlen($_POST['pwd1']) < 8 ) {
+            $erreur .= "Longueur du mot de passe doit être supérieur à 8<br>" ;
+          }
+          if ($_POST['pwd1'] != $_POST['pwd2']) {
+            $erreur .= "Les mots de passes ne sont pas identiques<br>";
+          }
+          $erreur .= testEmptyField('prenom');
+          $erreur .= testEmptyField('nom');
+          $erreur .= testEmptyField('age');
+          $erreur .= testEmptyField('pseudo');
+          $erreur .= testEmptyField('email');
+
+          if( !empty($erreur)) {
+            //Traitement du formulaire
+            echo "<p>" . var_dump($_POST);
+            $password = password_hash($_POST['pwd1'], PASSWORD_DEFAULT);
+            echo "Voici le password crypté: ".$password;
+
+          }
+
+          echo "<p>" . $erreur . "</p>";
+
+        }
+      ?>
+
+      <form method='post' action='ajout_utilisateur.php'>
+        <div class="form-group">
+          <label for="prenom">Prénom:</label>
+          <input type="text" class="form-control" id="prenom" name="prenom">
+        </div>
         <div class="form-group">
           <label for="nom">Nom:</label>
-          <input type="text" class="form-control" id="nom" name="nom" required="required">
+          <input type="text" class="form-control" id="nom" name="nom">
         </div>
         <div class="form-group">
           <label for="age">Age:</label>
           <input type="number" class="form-control" id="age" name="age">
         </div>
+        <div class="form-group">
+          <label for="pseudo">Pseudo:</label>
+          <input type="text" class="form-control" id="pseudo" name="pseudo">
+        </div>
+        <div class="form-group">
+          <label for="pwd1">Password:</label>
+          <input type="password" class="form-control" id="pwd1" name="pwd1">
+        </div>
+        <div class="form-group">
+          <label for="pwd2">Confirmation password:</label>
+          <input type="password" class="form-control" id="pwd2" name="pwd2">
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="text" class="form-control" id="email" name="email">
+        </div>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <input type="submit" class="btn btn-primary" data-dismiss="modal"/>
+        <input type="submit" class="btn btn-primary" data-dismiss="modal" name="valider" value="Valider"/>
       </form>
 
     </div><!-- End container -->
