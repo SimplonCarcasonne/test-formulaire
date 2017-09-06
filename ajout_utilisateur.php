@@ -35,13 +35,6 @@
 
         //Si le formulaire est soumis
         if(isset($_POST['valider'])) {
-          $prenom = htmlspecialchars($_POST['prenom']);
-          $nom = htmlspecialchars($_POST['nom']);
-          $age = htmlspecialchars($_POST['age']);
-          $email = htmlspecialchars($_POST['email']);
-          $pseudo = htmlspecialchars($_POST['pseudo']);
-          $password = password_hash($_POST['pwd1'], PASSWORD_DEFAULT);
-
           //Validation du formulaire
           $erreur = "";
           $message = "";
