@@ -1,3 +1,11 @@
+<?php
+  session_start();
+  if( !isset($_SESSION['uti_pseudo'])) {
+    //Je ne suis pas connecté
+    header('Location: connexion.php');
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
